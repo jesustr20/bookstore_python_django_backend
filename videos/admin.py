@@ -1,10 +1,9 @@
 from django.contrib import admin
-from books.models import Book
-
+from videos.models import Video
 # Register your models here.
-@admin.register(Book)
-class BookAdmin(admin.ModelAdmin):
-    list_display = ['title', 'author','published_date','user', 'privacy','get_comment_count']
+@admin.register(Video)
+class VideoAdmin(admin.ModelAdmin):
+    list_display = ['title', 'author','published_date','user', 'get_comment_count']
 
     def get_comment_count(self, obj):
         return obj.comment.count()

@@ -12,13 +12,12 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Book',
+            name='Documental',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=100)),
                 ('author', models.CharField(max_length=100)),
                 ('published_date', models.DateField()),
-                ('privacy', models.CharField(choices=[('public', 'Public (Anonymous users can see)'), ('authenticated', 'Authenticated users only'), ('private', 'Private (Only creator)')], default='private', max_length=13)),
             ],
             options={
                 'abstract': False,

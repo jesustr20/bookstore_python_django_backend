@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
+from mixins import InspectableModel
 
 # Create your models here.
 
@@ -25,7 +26,7 @@ class UserManager(BaseUserManager):
 
         return self.create_user(email, password, **extra_fields)
     
-class User(AbstractUser):
+class User(InspectableModel, AbstractUser):
     email = models.EmailField(unique=True)
 
     username = None

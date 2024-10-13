@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import datetime
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,11 +39,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'drf_yasg',
+    'django_extensions',
+    'drf_yasg',    
     'rest_framework',
     'users',
     'books',
-    'comments'
+    'comments',
+    'articles',
+    'documentals',
+    'videos',
 ]
 
 MIDDLEWARE = [
@@ -139,6 +145,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #Inicia con el Email al panel de django admin
 AUTH_USER_MODEL = 'users.User'
 
+#Time JWT
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=120)
+}
 
 #VIsta swagger
 SWAGGER_SETTINGS = {
@@ -153,3 +163,17 @@ SWAGGER_SETTINGS = {
     'USE_SESSION_AUTH': False,
     'VALIDATOR_URL': None,
 }
+
+# Configuración para Redis Cache
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',  # Cambia según tu configuración de Redis
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+
+# Tiempo de vida por defecto del cache (opcional)
+CACHE_TTL = 60 * 15  # 15 minutos
