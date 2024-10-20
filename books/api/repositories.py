@@ -38,18 +38,7 @@ class BookRepository:
                 raise PermissionDenied("No tienes permiso para ver este libro.")
         
         return book
-        #if user and user.is_staff:
-        #    return Book.objects.filter(id=book_id).first()
-        #
-        #if user and user.is_authenticated:
-        #    return Book.objects.filter(
-        #        models.Q(id=book_id) & (
-        #        models.Q(privacy='public') |
-        #        models.Q(privacy='authenticated') |
-        #        models.Q(user=user))
-        #    ).first()
-        #return Book.objects.filter(id=book_id, privacy='public').first()
-    
+
     @staticmethod
     def create_book(book_data, user):
         if 'user' in book_data:
@@ -58,4 +47,5 @@ class BookRepository:
     
     @staticmethod
     def delete_book(book):
-        book.delete()
+        book.is_active = False
+        book.save()

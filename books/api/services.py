@@ -28,4 +28,4 @@ class BookService:
         return BookRepository.create_book(book_data, self.user)
     
     def delete_book(self, book):
-        return BookRepository.delete_book(book)
+        BookRepository.delete_book(book)

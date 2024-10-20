@@ -17,7 +17,7 @@ class BookListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Book
-        fields = ['id', 'title', 'author','published_date','privacy','user','comments']
+        fields = ['id', 'title', 'author','published_date','privacy','user','comments' ]
 
     def get_user(self, obj):
         from users.api.serializers import UserListSerializer
