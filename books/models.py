@@ -20,6 +20,7 @@ class Book(InspectableModel, models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="books")
     privacy = models.CharField(max_length=13, choices=PRIVACY_CHOICES, default='private')
     comment = GenericRelation(Comment)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self) -> str:
         return self.title
