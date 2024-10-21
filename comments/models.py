@@ -17,5 +17,11 @@ class Comment(InspectableModel, models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
 
+    is_active = models.BooleanField(default=True)
+
     def __str__(self) -> str:
         return f"Comment by {self.user.email} on {self.content_type}"
+    
+    def deactivate(self):
+        self.is_active = False
+        self.save()

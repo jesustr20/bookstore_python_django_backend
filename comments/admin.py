@@ -3,7 +3,7 @@ from comments.models import Comment
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ['content', 'score', 'created_at', 'user', 'content_type', 'object_id', 'content_object']
+    list_display = ['content', 'score', 'created_at', 'user', 'content_type', 'object_id', 'content_object', 'is_active']
 
     # Método para mostrar la cantidad de objetos relacionados con el 'content_type'
     def related_object_count(self, obj):
