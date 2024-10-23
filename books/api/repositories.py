@@ -47,5 +47,4 @@ class BookRepository:
     
     @staticmethod
     def delete_book(book):
-        book.is_active = False
-        book.save()
+        book.deactivate()

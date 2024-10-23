@@ -1,10 +1,7 @@
-from rest_framework import generics, serializers
+from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated,AllowAny
 from rest_framework.exceptions import NotFound
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import JsonResponse
-from django.contrib.contenttypes.models import ContentType
-from django.shortcuts import get_object_or_404
 from comments.models import Comment
 from comments.api.serializers import(
     CommentSerializer,

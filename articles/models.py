@@ -14,6 +14,11 @@ class Article(InspectableModel, models.Model):
     published_date = models.DateField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="articles")
     comment = GenericRelation(Comment)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self) -> str:
         return self.title
+
+    def deactivate(self):
+        self.is_active = False
+        self.save()
