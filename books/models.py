@@ -24,3 +24,7 @@ class Book(InspectableModel, models.Model):
 
     def __str__(self) -> str:
         return self.title
+    
+    def deactivate(self):
+        self.is_active = False
+        self.save()

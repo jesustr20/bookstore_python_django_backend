@@ -65,6 +65,6 @@ class BookDetailView(BaseBookView, generics.RetrieveUpdateDestroyAPIView):
             raise NotFound("Book not found.")
         return book
     
-    def perform_destroy(self, instance):
+    def perform_destroy(self, book_id):
         book_service = self.get_service()
-        book_service.delete_book(instance)
+        book_service.delete_book(book_id)
