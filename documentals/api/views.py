@@ -1,6 +1,8 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.exceptions import NotFound
+from django_filters.rest_framework import DjangoFilterBackend
+from documentals.api.filters import DocumentalFilter
 from documentals.models import Documental
 from documentals.api.serializers import(
     DocumentalSerializer,
@@ -37,6 +39,8 @@ class DocumentalCreateView(BaseDocumentalView, generics.CreateAPIView):
 
 class DocumentalListView(BaseDocumentalView, generics.ListAPIView):
     serializer_class = DocumentalListSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = DocumentalFilter
 
     def get_queryset(self):
         return self.get_service().list_documentals()
