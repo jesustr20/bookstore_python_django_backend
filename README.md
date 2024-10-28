@@ -85,3 +85,15 @@ http://127.0.0.1:8000/admin/
 ```python
 http://127.0.0.1:8000/docs/
 ```
+
+### Pagination
+http://127.0.0.1:8000/api/books/list/?page=<number_page>&page_size=<size_result>
+
+### Search Filter
+http://127.0.0.1:8000/api/books/list/?author=<name_author>&privacy=<type_privacy>&published_date=<object_date>&title=<object_title>
+
+### Combination "Search Filter + Pagination"
+http://127.0.0.1:8000/api/books/list/?title=<object_title>&page=<number_page>&page_size=<size_result>
+
+### ### Combination "Search Filter + Pagination" viceversa
+http://127.0.0.1:8000/api/books/list/?page=<number_page>&page_size=<size_result>&title=<object_title>

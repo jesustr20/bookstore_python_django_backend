@@ -1,6 +1,8 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.exceptions import NotFound
+from django_filters.rest_framework import DjangoFilterBackend
+from videos.api.filters import VideoFilter
 from videos.models import Video
 from videos.api.serializers import(
     VideoSerializer,
@@ -37,6 +39,8 @@ class VideoCreateView(BaseVideoView, generics.CreateAPIView):
 
 class VideolListView(BaseVideoView, generics.ListAPIView):
     serializer_class = VideoListSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = VideoFilter
 
     def get_queryset(self):
         return self.get_service().list_videos()

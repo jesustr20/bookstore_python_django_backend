@@ -1,7 +1,8 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.exceptions import NotFound
-from django.core.exceptions import ObjectDoesNotExist
+from django_filters.rest_framework import DjangoFilterBackend
+from articles.api.filters import ArticleFilter
 from articles.models import Article
 from articles.api.serializers import (
     ArticleSerializer,
@@ -37,6 +38,8 @@ class ArticleCreateView(BaseArticleView, generics.CreateAPIView):
 
 class ArticleListView(BaseArticleView, generics.ListAPIView):
     serializer_class = ArticleListSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = ArticleFilter
     
     def get_queryset(self):        
         return self.get_service().list_articles()

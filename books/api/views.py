@@ -1,6 +1,8 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.exceptions import NotFound
+from django_filters.rest_framework import DjangoFilterBackend
+from books.api.filters import BookFilter
 from django.http import Http404
 from books.models import Book
 from books.api.serializers import (
@@ -35,6 +37,8 @@ class BookCreateView(BaseBookView, generics.CreateAPIView):
 
 class BookListView(BaseBookView, generics.ListAPIView):
     serializer_class = BookListSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = BookFilter
 
     def get_queryset(self):
         if self.request.user.is_authenticated and self.request.user.is_staff: 

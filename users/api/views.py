@@ -1,6 +1,8 @@
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
+from users.api.filters import UserFilter
 from users.models import User
 from users.api.serializers import (
     UserSerializer,
@@ -22,6 +24,9 @@ class UserCreateView(generics.CreateAPIView):
 class UserListView(generics.ListAPIView):    
     serializer_class = UserListSerializer
     permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = UserFilter
+
 
     def get_queryset(self):
         return UserService.get_all_users()
