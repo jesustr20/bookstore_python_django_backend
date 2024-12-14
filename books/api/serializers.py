@@ -6,10 +6,16 @@ from comments.api.serializers import(
 )
 
 class BookSerializer(serializers.ModelSerializer):    
+    user = serializers.StringRelatedField()
+    comments = CommentListSerializer(many=True, read_only=True)
 
     class Meta:
         model = Book
-        fields = ['title','author','published_date','privacy']
+        fields = ['id','title','author','published_date','privacy', 'user', 'comments']
+    
+    def get_user(self, obj):
+        from users.api.serializers import UserListSerializer
+        return UserListSerializer(obj.user).data
 
 class BookListSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()

@@ -11,12 +11,16 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 import datetime
+import environ
 import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+#Inicializar el entorno
+env = environ.Env()
+environ.Env.read_env()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -123,12 +127,20 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_PAGINATION_CLASS': 'books.api.pagination.CustomPagination',
-    'PAGE_SIZE': 10,
+    'PAGE_SIZE': 2,
     'MAX_PAGE_SIZE': 100,
     'PAGE_SIZE_QUERY_PARAM': 'page_size',
-    'DEFAULT_FILTER_BACKENDS':(
-        'rest_framework.filters.SearchFilter',
-    ),
+    'DEFAULT_FILTER_BACKENDS': [
+    'rest_framework.filters.SearchFilter',
+    ],
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.UserRateThrottle',
+        'rest_framework.throttling.AnonRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'user': '100/hour',  # 100 solicitudes por hora para usuarios autenticados
+        'anon': '50/hour',   # 50 solicitudes por hora para usuarios anónimos
+    }
 }
 
 # Internationalization
@@ -179,12 +191,16 @@ SWAGGER_SETTINGS = {
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379/1',  # Cambia según tu configuración de Redis
+        'LOCATION': 'redis://127.0.0.1:6379',  # Cambia según tu configuración de Redis
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'IGNORE_EXCEPTIONS': True,
         }
     }
 }
 
-# Tiempo de vida por defecto del cache (opcional)
-CACHE_TTL = 60 * 15  # 15 minutos
+#GESTION DE SESIONES
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
+SESSION_COOKIE_AGE = 60 * 60  # 1 hora -  Tiempo de vida por defecto del cache (opcional)
+SESSION_SAVE_EVERY_REQUEST = True  # Renueva la sesión en cada solicitud

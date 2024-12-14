@@ -8,17 +8,16 @@ class CustomPagination(PageNumberPagination):
 
     def get_paginated_response(self, data):
         # Verifica si no hay registros en la página actual
-        if not data and self.page.number == 1:
-            return Response({
-                'count': self.page.paginator.count,
-                'total_pages': self.page.paginator.num_pages,
-                'current_page': self.page.number,
-                'results': data,
-            })
-            
-        return Response({
+        response = {
             'count': self.page.paginator.count,
             'total_pages': self.page.paginator.num_pages,
             'current_page': self.page.number,
             'results': data,
-        })
+        }
+
+        # Excluir 'next' y 'previous' si no hay más de una página
+        if self.page.paginator.num_pages > 1:
+            response['next'] = self.get_next_link()
+            response['previous'] = self.get_previous_link()
+
+        return Response(response)

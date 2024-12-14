@@ -97,3 +97,10 @@ http://127.0.0.1:8000/api/books/list/?title=<object_title>&page=<number_page>&pa
 
 ### ### Combination "Search Filter + Pagination" viceversa
 http://127.0.0.1:8000/api/books/list/?page=<number_page>&page_size=<size_result>&title=<object_title>
+
+### Bash django para testear codigo en bash
+Para acceder:
+
+```python
+2.- python3 manage.py shell_plus
+```
